@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+{% block content %}
+<nav style="margin-left:5px" class="navbar navbar-light bg-light pt-4">
+  <div class="container-fluid">
+    <a class="btn btn-outline-success">Enrollment App</a>
+  </div>
+</nav>
+<br/>
+<div style="float: right; margin-right: 45px; margin-top: 20px;">
+    <a class="btn btn-outline-success" href="{% url 'create_student' %}">+ New Student</a>
+</div>
+<br/>
+<div>
+    <table style="margin-left: 5px;" class="table table-striped mt-5">
+        <thead>
+        <tr>
+            <th scope="col">Sr.No.</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Class</th>
+            <th scope="col">Marks</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in dataset %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td class="get_detail"><a href="{% url 'detail' pk=data.pk %}" data-id="{{ data.id }}">{{ data.student_name }}</a></td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phone_no }}</td>
+            <td>{{ data.dob|date:'Y-m-d'}}</td>
+            <td>{{ data.get_class_opted_display }}</td>
+            <td>{{ data.marks|default:"N/A" }}</td>
+
+
+                    </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+ <div class="modal fade" id="modal_student">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+ </div>
+
+{% endblock %}
+{% load static %}
+
+{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="{% static 'js/student/student.js' %}"></script>
+{% endblock %}
+</body>
+</html>
